@@ -4,5 +4,6 @@
 /Classification/VehicleInMirrorDetection/DatasetDownloader/Dataset/*
 /Classification/TrafficLightDetection/Dataset/*
 /Classification/TrafficLightDetection/*.pt
+/Classification/VehicleDetection/Dataset/*
 
 /ObjectDetection/DatasetGenerator/Dataset/*
