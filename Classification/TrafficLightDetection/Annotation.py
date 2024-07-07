@@ -147,6 +147,10 @@ print("Please annotate the images!")
 index = 0
 while True:
 
+    if index > len(images) - 1:
+        print("Done!")
+        break
+
     image, file = images[index]
 
     frame = background.copy()

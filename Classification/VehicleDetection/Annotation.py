@@ -20,7 +20,7 @@ CLASSES = [("hatchback",    "a",                                    True),
 Continue_Key = "."
 Delete_Key = ","
 
-PATH = r"C:\Users\olefr\Downloads\test"
+PATH = os.path.dirname(__file__) + "/Dataset"
 PATH = str(PATH).replace("\\", "/")
 if PATH[-1] == "/":
     PATH = PATH[:-1]
