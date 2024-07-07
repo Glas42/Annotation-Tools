@@ -1,5 +1,6 @@
 # ignore pycache everywhere
 **/__pycache__
 
-# ignore the ModelFiles
-/Classification/VehicleInMirrorDetection/Dataset
+/Classification/VehicleInMirrorDetection/DatasetDownloader/Dataset/*
+
+/ObjectDetection/DatasetGenerator/Dataset/*
