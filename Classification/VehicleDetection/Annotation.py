@@ -25,6 +25,9 @@ PATH = str(PATH).replace("\\", "/")
 if PATH[-1] == "/":
     PATH = PATH[:-1]
 
+if not os.path.exists(PATH):
+    os.mkdir(PATH)
+
 window_name = "Annotiation"
 frame_width = 1200
 frame_height = 600

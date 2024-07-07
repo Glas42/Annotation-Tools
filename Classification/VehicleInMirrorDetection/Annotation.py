@@ -9,7 +9,10 @@ frame_width = 800
 frame_height = 600
 last_left_clicked = False
 window_name = "Classification - Annotiation"
-PATH = os.path.dirname(os.path.dirname(__file__)) + "\\ModelFiles\\"
+PATH = os.path.dirname(__file__) + "\\"
+
+if not os.path.exists(f"{PATH}Dataset"):
+    os.mkdir(f"{PATH}Dataset")
 
 classes = ["0", "1", "2"]
 
@@ -124,11 +127,11 @@ if auto_annotation:
             print("Model loaded successfully.\n")
 
 print("\rCreating image list...", end="")
-for i, file in enumerate(os.listdir(f"{PATH}EditedTrainingData")):
+for i, file in enumerate(os.listdir(f"{PATH}Dataset")):
     if file.endswith(".png"):
-        images.append((cv2.imread(os.path.join(f"{PATH}EditedTrainingData", file)), f"{file}"))
+        images.append((cv2.imread(os.path.join(f"{PATH}Dataset", file)), f"{file}"))
     if i % 100 == 0:
-        print(f"\rCreating image list... ({round(i/len(os.listdir(f'{PATH}EditedTrainingData'))*100)}%)", end="")
+        print(f"\rCreating image list... ({round(i/len(os.listdir(f'{PATH}Dataset'))*100)}%)", end="")
 print("\rCreated image list.           ", end="\n")
 
 background = np.zeros((frame_height, frame_width, 3), np.uint8)
@@ -145,6 +148,10 @@ if os.name == "nt":
 print("Please annotate the images!")
 index = 0
 while True:
+
+    if index > len(images) - 1:
+        print("Done!")
+        break
 
     image, file = images[index]
 
@@ -193,11 +200,11 @@ while True:
         print("Error resizing image:", file)
         if input("Delete this image? (y/n)").lower() == "y":
             try:
-                os.remove(os.path.join(f"{PATH}EditedTrainingData/{file}"))
+                os.remove(os.path.join(f"{PATH}Dataset/{file}"))
             except Exception as ex:
                 print(ex)
             try:
-                os.remove(os.path.join(f"{PATH}EditedTrainingData/{file.replace('.png', '.txt')}"))
+                os.remove(os.path.join(f"{PATH}Dataset/{file.replace('.png', '.txt')}"))
             except Exception as ex:
                 print(ex)
             index += 1
@@ -338,19 +345,19 @@ while True:
 
 
     if button_class_0_pressed == True:
-        with open(os.path.join(f"{PATH}EditedTrainingData/{file.replace('.png', '.txt')}"), 'w') as f:
+        with open(os.path.join(f"{PATH}Dataset/{file.replace('.png', '.txt')}"), 'w') as f:
             f.truncate(0)
             f.write("0")
             f.close()
         index += 1
     elif button_class_1_pressed == True:
-        with open(os.path.join(f"{PATH}EditedTrainingData/{file.replace('.png', '.txt')}"), 'w') as f:
+        with open(os.path.join(f"{PATH}Dataset/{file.replace('.png', '.txt')}"), 'w') as f:
             f.truncate(0)
             f.write("1")
             f.close()
         index += 1
     elif button_class_2_pressed == True:
-        with open(os.path.join(f"{PATH}EditedTrainingData/{file.replace('.png', '.txt')}"), 'w') as f:
+        with open(os.path.join(f"{PATH}Dataset/{file.replace('.png', '.txt')}"), 'w') as f:
             f.truncate(0)
             f.write("2")
             f.close()
