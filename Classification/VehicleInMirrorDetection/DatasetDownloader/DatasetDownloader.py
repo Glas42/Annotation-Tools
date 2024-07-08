@@ -3,10 +3,12 @@ import requests
 import time
 import os
 
-if not os.path.exists(f"{os.path.dirname(__file__)}/Dataset"):
-    os.mkdir(f"{os.path.dirname(__file__)}/Dataset")
+DATA_PATH = "Dataset"
 
-index = len(os.listdir(f"{os.path.dirname(__file__)}/Dataset"))
+if not os.path.exists(f"{os.path.dirname(__file__)}/{DATA_PATH}"):
+    os.mkdir(f"{os.path.dirname(__file__)}/{DATA_PATH}")
+
+index = len(os.listdir(f"{os.path.dirname(__file__)}/{DATA_PATH}"))
 
 pause_time = 20
 stop = False
@@ -32,7 +34,7 @@ def download(image_number):
     thread_count -= 1
 
 for i in range(index):
-    if not os.path.exists(f"{os.path.dirname(__file__)}/images/{i}.png"):
+    if not os.path.exists(f"{os.path.dirname(__file__)}/{DATA_PATH}/{i}.png"):
         while True:
             print(f"Downloading {i}.png as it was missing")
             if thread_count < max_threads:
@@ -48,7 +50,7 @@ def WritingThread():
         if len(queue) > 0:
             for thing in queue:
                 try:
-                    with open(os.path.join(os.path.dirname(__file__), "images", f"{thing[0]}.png"), "wb") as f:
+                    with open(os.path.join(os.path.dirname(__file__), DATA_PATH, f"{thing[0]}.png"), "wb") as f:
                         f.write(thing[1])
                 except:
                     print(f"Failed to write {thing[0]}")
