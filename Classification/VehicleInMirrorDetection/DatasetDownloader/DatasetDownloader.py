@@ -3,15 +3,15 @@ import requests
 import time
 import os
 
-if not os.path.exists(f"{os.path.dirname(__file__)}/images"):
-    os.mkdir(f"{os.path.dirname(__file__)}/images")
+if not os.path.exists(f"{os.path.dirname(__file__)}/Dataset"):
+    os.mkdir(f"{os.path.dirname(__file__)}/Dataset")
 
-index = len(os.listdir(f"{os.path.dirname(__file__)}/images"))
+index = len(os.listdir(f"{os.path.dirname(__file__)}/Dataset"))
 
 pause_time = 20
 stop = False
 thread_count = 0
-max_threads = 10
+max_threads = 20
 queue = []
 
 print("Starting from index", index)
