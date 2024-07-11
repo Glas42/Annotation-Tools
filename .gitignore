@@ -2,6 +2,7 @@
 **/__pycache__
 
 /Classification/VehicleInMirrorDetection/DatasetDownloader/Dataset/*
+/Classification/VehicleInMirrorDetection/Dataset/*
 /Classification/TrafficLightDetection/Dataset/*
 /Classification/TrafficLightDetection/*.pt
 /Classification/VehicleDetection/Dataset/*

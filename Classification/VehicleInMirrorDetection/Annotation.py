@@ -5,7 +5,7 @@ import cv2
 import os
 
 images = []
-frame_width = 800
+frame_width = 1000
 frame_height = 600
 last_left_clicked = False
 window_name = "Classification - Annotiation"
