@@ -5,9 +5,9 @@ import os
 
 (images_train, labels_train), (images_test, labels_test) = tf.keras.datasets.mnist.load_data()
 
-grid_size = 9
+grid_size = 10
 number_of_digits_per_image = 3
-number_of_images_to_generate = 500
+number_of_images_to_generate = 1000
 save_path = os.path.dirname(__file__) + "/Dataset"
 save_path = save_path[:-1] if save_path[-1] in ["/", "\\"] else save_path
 
@@ -51,7 +51,7 @@ for _ in range(number_of_images_to_generate):
                 min_y /= frame.shape[0]
                 max_x /= frame.shape[1]
                 max_y /= frame.shape[0]
-                annotation.append(f"{min_x},{min_y},{max_x},{max_y}")
+                annotation.append(f"{label},{min_x},{min_y},{max_x},{max_y}")
                 frame[y:(y+28), x:(x+28)] = digit
                 digit_placed = True
 

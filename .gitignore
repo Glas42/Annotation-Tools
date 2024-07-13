@@ -1,8 +1,8 @@
 # ignore pycache everywhere
 **/__pycache__
 
-/Classification/VehicleInMirrorDetection/DatasetDownloader/Dataset/*
-/Classification/VehicleInMirrorDetection/Dataset/*
+/Classification/MirrorVehicleDetection/DatasetDownloader/Dataset/*
+/Classification/MirrorVehicleDetection/Dataset/*
 /Classification/TrafficLightDetection/Dataset/*
 /Classification/TrafficLightDetection/*.pt
 /Classification/VehicleDetection/Dataset/*
