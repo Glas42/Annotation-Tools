@@ -1,10 +1,16 @@
 # ignore pycache everywhere
 **/__pycache__
 
+# Classification
 /Classification/MirrorVehicleDetection/DatasetDownloader/Dataset/*
 /Classification/MirrorVehicleDetection/Dataset/*
+
+/Classification/MNIST/Dataset/*
+
 /Classification/TrafficLightDetection/Dataset/*
 /Classification/TrafficLightDetection/*.pt
+
 /Classification/VehicleDetection/Dataset/*
 
+# Object Detection
 /ObjectDetection/DatasetGenerator/Dataset/*
