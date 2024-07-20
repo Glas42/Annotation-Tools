@@ -89,9 +89,13 @@ for _ in range(number_of_images_to_generate):
                 max_x /= frame.shape[1]
                 max_y /= frame.shape[0]
                 if save_format == 1:
-                    annotation.append(f"{label} {min_x} {min_y} {max_x} {max_y}")
+                    annotation.append(f"{label},{min_x},{min_y},{max_x},{max_y}")
                 elif save_format == 2:
-                    annotation.append(f"{label} {(min_x + max_x) / 2} {(min_y + max_y) / 2} {max_x - min_x} {max_y - min_y}")
+                    cx = (min_x + max_x) / 2
+                    cy = (min_y + max_y) / 2
+                    w = max_x - min_x
+                    h = max_y - min_y
+                    annotation.append(f"{label} {cx} {cy} {w} {h}")
                 frame[y:(y+28), x:(x+28)] = digit
                 digit_placed = True
 
