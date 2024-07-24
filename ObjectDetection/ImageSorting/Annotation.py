@@ -1,8 +1,10 @@
 import numpy as np
 import keyboard
+import datetime
 import shutil
 import ctypes
 import mouse
+import time
 import cv2
 import os
 
@@ -13,7 +15,7 @@ CLASSES = []
 Continue_Key = "a"
 Delete_Key = "s"
 
-PATH = os.path.join(os.path.dirname(__file__), "DatasetAssets", "Images")
+PATH = os.path.join(os.path.dirname(__file__), "DatasetAssets", "NotDetected")
 UNANNOTED_IMAGES_PATH = os.path.join(os.path.dirname(__file__), "DatasetAssets", "UnannotatedImages")
 window_name = "Annotiation"
 frame_width = 1800
@@ -25,7 +27,7 @@ last_pressed_keys = []
 last_left_clicked = False
 last_window_size = frame_width, frame_height
 load_from_disk = True
-
+max_image_limit = 1000
 
 def get_text_size(text="NONE", text_width=0.5*frame_width, max_text_height=0.5*frame_height):
     fontscale = 1
@@ -118,12 +120,15 @@ for file in os.listdir(f"{PATH}"):
         annotation_counter += 1
     if file.endswith(".png"):
         total_counter += 1
+if total_counter > max_image_limit and max_image_limit > 0:
+    total_counter = max_image_limit
 print(f"\r{annotation_counter}/{total_counter} annotated...   ", end="")
 
 index = 0
+annotation_start = time.time()
 while True:
 
-    if index >= len(images):
+    if index >= total_counter:
         print("\nAll images annotated, exiting...")
         break
 
@@ -239,11 +244,12 @@ while True:
     if button_delete_pressed:
         try:
             os.remove(f"{PATH}/{file}")
-            total_counter -= 1
+            annotation_counter += 1
         except:
             print(f"\nError deleting image: {f'{PATH}/{file}'}")
         selected_classes = []
-        index += 1
+        images.pop(index)
+        index += 1      
         print(f"\r{annotation_counter}/{total_counter} annotated...   ", end="")
 
     for i, (button_pressed, button_hovered) in enumerate(buttons):
@@ -272,3 +278,9 @@ while True:
 
     cv2.imshow(window_name, frame)
     cv2.waitKey(1)
+
+annotation_end = time.time()
+annotation_time = annotation_end - annotation_start
+annotation_time_formatted = str(datetime.timedelta(seconds=annotation_time))
+
+print(f"Annotation time: {annotation_time_formatted}")
