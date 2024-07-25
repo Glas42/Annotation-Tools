@@ -41,7 +41,9 @@ def download(image_number):
                 for i in range(10):
                     if requests.get(f"https://filebrowser.tumppi066.fi/api/public/dl/{drive_id}/{image_number + i + 1}.png?inline=true").status_code != 404:
                         downloaded = True
-                        continue
+                        break
+                if downloaded:
+                    break
                 time.sleep(60)
                 continue
             with open(f"{os.path.dirname(__file__)}/Dataset/{image_number}.png", "wb") as f:
