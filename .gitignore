@@ -2,7 +2,6 @@
 **/__pycache__
 
 # Classification
-/Classification/MirrorVehicleDetection/DatasetDownloader/Dataset/*
 /Classification/MirrorVehicleDetection/Dataset/*
 
 /Classification/MNIST/Dataset/*
@@ -14,3 +13,6 @@
 
 # Object Detection
 /ObjectDetection/DatasetGenerator/Dataset/*
+
+# Dataset Downloader
+/DatasetDownloader/Dataset/*
