@@ -27,7 +27,7 @@ print()
 if not os.path.exists(f"{os.path.dirname(__file__)}/Dataset"):
     os.mkdir(f"{os.path.dirname(__file__)}/Dataset")
 
-index = len([f for f in os.listdir(f"{os.path.dirname(__file__)}/Dataset") if f.endswith('.png')])
+index = len([f for f in os.listdir(f"{os.path.dirname(__file__)}/Dataset") if f.endswith('.png') or f.endswith('.jpg') or f.endswith('.jpeg')])
 
 print("Starting from index", index)
 
@@ -48,19 +48,21 @@ def download(image_number):
                 continue
             with open(f"{os.path.dirname(__file__)}/Dataset/{image_number}.png", "wb") as f:
                 f.write(response.content)
-            try:
-                response = requests.get(f"https://filebrowser.tumppi066.fi/api/public/dl/{drive_id}/{image_number}.txt?inline=true")
-                with open(f"{os.path.dirname(__file__)}/Dataset/{image_number}.txt", "wb") as f:
-                    f.write(response.content)
-            except:
-                pass
+            response = requests.get(f"https://filebrowser.tumppi066.fi/api/public/dl/{drive_id}/{image_number}.txt?inline=true")
+            if response.status_code == 404:
+                continue
+            with open(f"{os.path.dirname(__file__)}/Dataset/{image_number}.txt", "wb") as f:
+                f.write(response.content)
             downloaded = True
         except:
             time.sleep(60)
     thread_count -= 1
 
 for i in range(index):
-    if not os.path.exists(f"{os.path.dirname(__file__)}/Dataset/{i}.png"):
+    if ((os.path.exists(f"{os.path.dirname(__file__)}/Dataset/{i}.png") == False and
+        os.path.exists(f"{os.path.dirname(__file__)}/Dataset/{i}.jpg") == False and
+        os.path.exists(f"{os.path.dirname(__file__)}/Dataset/{i}.jpeg") == False) or
+        os.path.exists(f"{os.path.dirname(__file__)}/Dataset/{i}.txt") == False):
         print(f"\rDownloading {i} because the previous download did not download it...", end="")
         while True:
             if thread_count < max_threads:
