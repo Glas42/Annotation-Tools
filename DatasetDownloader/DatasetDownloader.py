@@ -3,7 +3,7 @@ import requests
 import time
 import os
 
-print("Information: This script is meant to download datasets from filebrowser.tumppi066.fi/[Drive ID].\n")
+print("Information: This script is only meant to download datasets from filebrowser.tumppi066.fi/[Drive ID]\n")
 
 drive_id = None
 while drive_id == None:
