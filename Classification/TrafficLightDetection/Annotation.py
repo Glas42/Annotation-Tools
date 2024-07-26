@@ -126,8 +126,16 @@ if auto_annotation:
 
 print("\rCreating image list...", end="")
 for i, file in enumerate(os.listdir(f"{PATH}Dataset")):
-    if file.endswith(".png"):
-        images.append((cv2.imread(os.path.join(f"{PATH}Dataset", file)), f"{file}"))
+    if file.endswith(".png") or file.endswith(".jpg") or file.endswith(".jpeg"):
+        try:
+            img = None
+            img = cv2.imread(os.path.join(f"{PATH}Dataset", file))
+            if img is None:
+                os.remove(os.path.join(f"{PATH}Dataset", file))
+            else:
+                images.append((img, f"{file}"))
+        except:
+            os.remove(os.path.join(f"{PATH}Dataset", file))
     if i % 100 == 0:
         print(f"\rCreating image list... ({round(i/len(os.listdir(f'{PATH}Dataset'))*100)}%)", end="")
 print("\rCreated image list.           ", end="\n")
