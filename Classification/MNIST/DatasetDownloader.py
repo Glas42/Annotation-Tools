@@ -18,6 +18,15 @@ train_label_dir = f"{PATH}Dataset/train_labels"
 test_image_dir = f"{PATH}Dataset/test_images"
 test_label_dir = f"{PATH}Dataset/test_labels"
 
+if os.path.exists(train_image_dir) == False:
+    os.mkdir(train_image_dir)
+if os.path.exists(train_label_dir) == False:
+    os.mkdir(train_label_dir)
+if os.path.exists(test_image_dir) == False:
+    os.mkdir(test_image_dir)
+if os.path.exists(test_label_dir) == False:
+    os.mkdir(test_label_dir)
+
 if clear:
     for file in os.listdir(train_image_dir):
         try:
