@@ -24,14 +24,14 @@ while number_of_images_to_generate < 0:
     except:
         number_of_images_to_generate = -1
 
-grid_size = []
-while len(grid_size) != 2 or grid_size[0] > grid_size[1]:
-    grid_size = input("How big should the grid be? (min, max)\n-> ").split(",")
+image_size = []
+while len(image_size) != 2 or image_size[0] > image_size[1]:
+    image_size = input("How big should the image be? (min, max)\n-> ").split(",")
     try:
-        grid_size = [int(x.strip()) for x in grid_size]
+        image_size = [int(x.strip()) for x in image_size]
     except:
-        grid_size = []
-grid_size = {"low": grid_size[0], "high": grid_size[1]}
+        image_size = []
+image_size = {"low": image_size[0], "high": image_size[1]}
 
 number_of_digits_per_image = []
 while len(number_of_digits_per_image) != 2 or number_of_digits_per_image[0] > number_of_digits_per_image[1]:
@@ -55,15 +55,15 @@ while save_format is None:
 exit() if input(f'Are you sure you want to generate {number_of_images_to_generate} images in the "{save_path}" folder? (y/n)\n-> ').lower() != "y" else None
 
 for _ in range(number_of_images_to_generate):
-    grid_width = random.randint(grid_size["low"], grid_size["high"])
-    grid_height = random.randint(grid_size["low"], grid_size["high"])
-    frame = np.zeros((grid_height * 28, grid_width * 28), dtype=np.uint8)
+    image_width = random.randint(image_size["low"], image_size["high"])
+    image_height = random.randint(image_size["low"], image_size["high"])
+    frame = np.zeros((image_height, image_width), dtype=np.uint8)
     annotation = []
     for i in range(random.randint(number_of_digits_per_image["low"], number_of_digits_per_image["high"])):
         digit_placed = False
         while not digit_placed:
-            x = np.random.randint(0, (grid_width - 1) * 28)
-            y = np.random.randint(0, (grid_height - 1) * 28)
+            x = np.random.randint(0, (image_width - 29))
+            y = np.random.randint(0, (image_height - 29))
             index = np.random.randint(0, len(images_train))
             digit = images_train[index]
             label = labels_train[index]
@@ -106,6 +106,15 @@ for _ in range(number_of_images_to_generate):
         f.close()
 
     cv2.imwrite(f"{save_path}/{name}.png", frame)
+
+    frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2BGR)
+    for box in annotation:
+        _, cx, cy, w, h = box.split(" ")
+        x1 = round((float(cx) - float(w) / 2) * frame.shape[1])
+        y1 = round((float(cy) - float(h) / 2) * frame.shape[0])
+        x2 = round((float(cx) + float(w) / 2) * frame.shape[1])
+        y2 = round((float(cy) + float(h) / 2) * frame.shape[0])
+        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 1)
 
     cv2.imshow("MNIST Grid", frame)
     cv2.waitKey(1)
